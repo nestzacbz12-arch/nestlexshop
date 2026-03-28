@@ -88,21 +88,64 @@ button:hover {
   <h2>🔥 Free Fire ID เทพ</h2>
   <p>สกินแน่น / ปืนครบ</p>
   <p>💰 300 บาท</p>
-  <button onclick="buy('Free Fire')">ซื้อเลย</button>
+  <button onclick="buy('Free Fire',300)">ซื้อเลย</button>
 </div>
 
 <div class="card">
   <h2>⚔️ ROV ID แรงค์สูง</h2>
   <p>ฮีโร่ครบ / แรงค์ Conqueror</p>
   <p>💰 500 บาท</p>
-  <button onclick="buy('ROV')">ซื้อเลย</button>
+ <button onclick="buy('ROV',500)">ซื้อเลย</button>
 </div>
 
 <script>
-function buy(game){
-  alert("คุณเลือกซื้อ " + game + "\\nระบบกำลังพัฒนา 🔥");
+<script>
+function buy(game, price){
+
+  let promptpay = "0966855206"; //
+
+  alert(
+    "ซื้อ " + game + "\n" +
+    "ราคา: " + price + " บาท\n\n" +
+    "👉 โอนเงินมาที่:\n" + promptpay + "\n\n" +
+    "แล้วทักแอดมินเพื่อรับไอดี 🔥"
+  );
+
+}
+</script><script>
+function register(){
+  let user = document.getElementById("user").value;
+  let pass = document.getElementById("pass").value;
+
+  localStorage.setItem(user, pass);
+  document.getElementById("status").innerText = "สมัครสำเร็จ!";
+}
+
+function login(){
+  let user = document.getElementById("user").value;
+  let pass = document.getElementById("pass").value;
+
+  let saved = localStorage.getItem(user);
+
+  if(saved === pass){
+    document.getElementById("status").innerText = "ล็อกอินสำเร็จ 🎉";
+  } else {
+    document.getElementById("status").innerText = "ข้อมูลไม่ถูกต้อง ❌";
+  }
+}
+   </script>
 }
 </script>
 
-</body>
+</body><div class="card">
+  <h2>🔐 เข้าสู่ระบบ</h2>
+
+  <input id="user" placeholder="ชื่อผู้ใช้"><br><br>
+  <input id="pass" type="password" placeholder="รหัสผ่าน"><br><br>
+
+  <button onclick="register()">สมัคร</button>
+  <button onclick="login()">ล็อกอิน</button>
+
+  <p id="status"></p>
+</div>
 </html>
