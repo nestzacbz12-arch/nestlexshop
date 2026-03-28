@@ -5,147 +5,170 @@
 <title>NestleXshop ⚡</title>
 
 <style>
-body {
+body{
   margin:0;
-  font-family: Arial;
-  background: radial-gradient(circle,#001f3f,#000);
+  font-family:Arial;
+  background:#001f3f;
   color:white;
+}
+
+/* เมนู */
+.nav{
+  background:black;
+  padding:10px;
+  display:flex;
+  justify-content:space-between;
+}
+
+.nav button{
+  background:cyan;
+  border:none;
+  padding:8px;
+  border-radius:10px;
+}
+
+.container{
+  padding:20px;
   text-align:center;
-  overflow-x:hidden;
 }
 
-/* เอฟเฟกต์สายฟ้า */
-body::before {
-  content:"";
-  position:fixed;
-  width:100%;
-  height:100%;
-  background: url("https://i.ibb.co/4R2Kc0H/lightning.png");
-  opacity:0.1;
-  animation:flash 2s infinite;
-}
-
-@keyframes flash {
-  0%{opacity:0.1;}
-  50%{opacity:0.3;}
-  100%{opacity:0.1;}
-}
-
-h1 {
-  font-size:45px;
-  margin-top:20px;
-  text-shadow:0 0 20px cyan, 0 0 40px blue;
-}
-
-.card {
-  background:rgba(0,0,0,0.7);
+.card{
+  background:#000000aa;
   margin:20px;
   padding:20px;
-  border-radius:20px;
-  box-shadow:0 0 25px cyan;
-  transition:0.3s;
-}
-
-.card:hover {
-  transform:scale(1.05);
-  box-shadow:0 0 40px cyan;
-}
-
-button {
-  background:linear-gradient(45deg,cyan,blue);
-  border:none;
-  padding:12px 25px;
   border-radius:15px;
-  font-weight:bold;
-  color:white;
-  cursor:pointer;
-  box-shadow:0 0 10px cyan;
-}
-
-button:hover {
   box-shadow:0 0 20px cyan;
 }
 
-.topbar {
-  background:#000;
-  padding:10px;
-  box-shadow:0 0 15px cyan;
+/* ซ่อน */
+.hidden{
+  display:none;
 }
 </style>
-
 </head>
 
 <body>
 
-<div class="topbar">
-  ⚡ NestleXshop | Free Fire & ROV ⚡
+<!-- 🔝 เมนู -->
+<div class="nav">
+  <div>
+    <button onclick="showPage('shop')">🛒 ขายไอดี</button>
+    <button onclick="showPage('topup')">💰 เติมพ้อย</button>
+  </div>
+
+  <div id="userInfo">ยังไม่ได้ล็อกอิน</div>
 </div>
 
-<h1>⚡ NestleXshop ⚡</h1>
-<p>ร้านขายไอดีเกมสุดเทพ 💎</p>
+<div class="container">
 
-<div class="card">
-  <h2>🔥 Free Fire ID เทพ</h2>
-  <p>สกินแน่น / ปืนครบ</p>
-  <p>💰 300 บาท</p>
-  <button onclick="buy('Free Fire',300)">ซื้อเลย</button>
+<!-- 🔐 หน้า Login -->
+<div id="loginPage">
+  <div class="card">
+    <h2>🔐 ล็อกอิน</h2>
+    <input id="user" placeholder="ชื่อ"><br><br>
+    <input id="pass" type="password" placeholder="รหัส"><br><br>
+
+    <button onclick="register()">สมัคร</button>
+    <button onclick="login()">ล็อกอิน</button>
+
+    <p id="status"></p>
+  </div>
 </div>
 
-<div class="card">
-  <h2>⚔️ ROV ID แรงค์สูง</h2>
-  <p>ฮีโร่ครบ / แรงค์ Conqueror</p>
-  <p>💰 500 บาท</p>
- <button onclick="buy('ROV',500)">ซื้อเลย</button>
+<!-- 🛒 หน้า Shop -->
+<div id="shopPage" class="hidden">
+
+  <div class="card">
+    <h2>🔥 Free Fire</h2>
+    <p>ราคา 300 พ้อย</p>
+    <button onclick="buy(300)">ซื้อ</button>
+  </div>
+
+  <div class="card">
+    <h2>⚔️ ROV</h2>
+    <p>ราคา 500 พ้อย</p>
+    <button onclick="buy(500)">ซื้อ</button>
+  </div>
+
+</div>
+
+<!-- 💰 หน้า Topup -->
+<div id="topupPage" class="hidden">
+  <div class="card">
+    <h2>เติมพ้อย</h2>
+    <button onclick="addPoints(100)">เติม 100</button>
+  </div>
+</div>
+
 </div>
 
 <script>
-<script>
-function buy(game, price){
+let currentUser = null;
+let points = 0;
 
-  let promptpay = "0966855206"; //
-
-  alert(
-    "ซื้อ " + game + "\n" +
-    "ราคา: " + price + " บาท\n\n" +
-    "👉 โอนเงินมาที่:\n" + promptpay + "\n\n" +
-    "แล้วทักแอดมินเพื่อรับไอดี 🔥"
-  );
-
-}
-</script><script>
 function register(){
-  let user = document.getElementById("user").value;
-  let pass = document.getElementById("pass").value;
+  let u = user.value;
+  let p = pass.value;
 
-  localStorage.setItem(user, pass);
-  document.getElementById("status").innerText = "สมัครสำเร็จ!";
+  localStorage.setItem(u,p);
+  localStorage.setItem(u+"_points",0);
+
+  status.innerText="สมัครสำเร็จ";
 }
 
 function login(){
-  let user = document.getElementById("user").value;
-  let pass = document.getElementById("pass").value;
+  let u = user.value;
+  let p = pass.value;
 
-  let saved = localStorage.getItem(user);
+  if(localStorage.getItem(u) === p){
+    currentUser = u;
+    points = Number(localStorage.getItem(u+"_points"));
 
-  if(saved === pass){
-    document.getElementById("status").innerText = "ล็อกอินสำเร็จ 🎉";
-  } else {
-    document.getElementById("status").innerText = "ข้อมูลไม่ถูกต้อง ❌";
+    loginPage.classList.add("hidden");
+    shopPage.classList.remove("hidden");
+
+    updateUI();
+  }else{
+    status.innerText="ผิด";
   }
 }
-   </script>
+
+function updateUI(){
+  userInfo.innerText = "👤 "+currentUser+" | 💰 "+points+" พ้อย";
+}
+
+function showPage(page){
+  if(!currentUser){
+    alert("กรุณาล็อกอินก่อน");
+    return;
+  }
+
+  shopPage.classList.add("hidden");
+  topupPage.classList.add("hidden");
+
+  if(page==="shop") shopPage.classList.remove("hidden");
+  if(page==="topup") topupPage.classList.remove("hidden");
+}
+
+function addPoints(amount){
+  points += amount;
+  localStorage.setItem(currentUser+"_points",points);
+  updateUI();
+}
+
+function buy(price){
+  if(points < price){
+    alert("พ้อยไม่พอ");
+    return;
+  }
+
+  points -= price;
+  localStorage.setItem(currentUser+"_points",points);
+  updateUI();
+
+  alert("ซื้อสำเร็จ! (ระบบส่งไอดีจะทำต่อ)");
 }
 </script>
 
-</body><div class="card">
-  <h2>🔐 เข้าสู่ระบบ</h2>
-
-  <input id="user" placeholder="ชื่อผู้ใช้"><br><br>
-  <input id="pass" type="password" placeholder="รหัสผ่าน"><br><br>
-
-  <button onclick="register()">สมัคร</button>
-  <button onclick="login()">ล็อกอิน</button>
-
-  <p id="status"></p>
-</div>
+</body>
 </html>
