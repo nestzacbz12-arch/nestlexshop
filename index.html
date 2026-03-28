@@ -8,7 +8,7 @@
 body{
   margin:0;
   font-family:Arial;
-  background:#0a0f1f;
+  background:#0b0f1a;
   color:white;
 }
 
@@ -16,22 +16,26 @@ body{
 .nav{
   display:flex;
   justify-content:space-between;
-  background:#000;
-  padding:10px;
-  box-shadow:0 0 15px cyan;
+  align-items:center;
+  background:#05070f;
+  padding:12px;
+  box-shadow:0 0 20px #00f0ff;
 }
 
-.nav-left button{
-  margin-right:10px;
+.logo{
+  font-size:20px;
+  font-weight:bold;
+  color:#00f0ff;
 }
 
 .nav button{
-  background:cyan;
+  margin-right:10px;
+  background:#00f0ff;
   border:none;
-  padding:8px 15px;
-  border-radius:10px;
-  cursor:pointer;
+  padding:6px 12px;
+  border-radius:8px;
   font-weight:bold;
+  cursor:pointer;
 }
 
 /* CONTAINER */
@@ -40,15 +44,43 @@ body{
   text-align:center;
 }
 
+/* GRID */
+.grid{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
 /* CARD */
 .card{
-  background:#111;
-  padding:20px;
+  background:#111827;
   margin:15px;
-  border-radius:15px;
-  box-shadow:0 0 20px cyan;
-  display:inline-block;
-  width:250px;
+  padding:15px;
+  border-radius:12px;
+  width:200px;
+  box-shadow:0 0 15px #00f0ff55;
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 25px #00f0ff;
+}
+
+/* IMAGE */
+.card img{
+  width:100%;
+  border-radius:10px;
+}
+
+/* BUTTON */
+.card button{
+  margin-top:10px;
+  background:#00f0ff;
+  border:none;
+  padding:8px;
+  border-radius:8px;
+  font-weight:bold;
 }
 
 /* INPUT */
@@ -69,126 +101,4 @@ input{
 
 <!-- NAV -->
 <div class="nav">
-  <div class="nav-left">
-    <button onclick="showPage('shop')">🛒 ขายไอดี</button>
-    <button onclick="showPage('topup')">💰 เติมพ้อย</button>
-  </div>
-  <div id="userInfo">ยังไม่ได้ล็อกอิน</div>
-</div>
-
-<div class="container">
-
-<!-- LOGIN -->
-<div id="loginPage">
-  <h2>🔐 เข้าสู่ระบบ</h2>
-  <input id="user" placeholder="ชื่อ"><br><br>
-  <input id="pass" type="password" placeholder="รหัส"><br><br>
-
-  <button onclick="register()">สมัคร</button>
-  <button onclick="login()">ล็อกอิน</button>
-
-  <p id="status"></p>
-</div>
-
-<!-- SHOP -->
-<div id="shopPage" class="hidden">
-
-  <div class="card">
-    <h3>🔥 Free Fire ID</h3>
-    <p>ราคา: 300 พ้อย</p>
-    <button onclick="buy('Free Fire',300)">ซื้อ</button>
-  </div>
-
-  <div class="card">
-    <h3>⚔️ ROV ID</h3>
-    <p>ราคา: 500 พ้อย</p>
-    <button onclick="buy('ROV',500)">ซื้อ</button>
-  </div>
-
-</div>
-
-<!-- TOPUP -->
-<div id="topupPage" class="hidden">
-  <h2>💰 เติมพ้อย</h2>
-  <button onclick="addPoints(100)">+100</button>
-  <button onclick="addPoints(500)">+500</button>
-</div>
-
-</div>
-
-<script>
-let currentUser = null;
-let points = 0;
-
-/* สมัคร */
-function register(){
-  let u = user.value;
-  let p = pass.value;
-
-  localStorage.setItem(u,p);
-  localStorage.setItem(u+"_points",0);
-
-  status.innerText="สมัครสำเร็จ";
-}
-
-/* ล็อกอิน */
-function login(){
-  let u = user.value;
-  let p = pass.value;
-
-  if(localStorage.getItem(u) === p){
-    currentUser = u;
-    points = Number(localStorage.getItem(u+"_points"));
-
-    loginPage.classList.add("hidden");
-    shopPage.classList.remove("hidden");
-
-    updateUI();
-  }else{
-    status.innerText="ข้อมูลผิด";
-  }
-}
-
-/* อัปเดต UI */
-function updateUI(){
-  userInfo.innerText = "👤 "+currentUser+" | 💰 "+points+" พ้อย";
-}
-
-/* เปลี่ยนหน้า */
-function showPage(page){
-  if(!currentUser){
-    alert("กรุณาล็อกอินก่อน");
-    return;
-  }
-
-  shopPage.classList.add("hidden");
-  topupPage.classList.add("hidden");
-
-  if(page==="shop") shopPage.classList.remove("hidden");
-  if(page==="topup") topupPage.classList.remove("hidden");
-}
-
-/* เติมพ้อย */
-function addPoints(amount){
-  points += amount;
-  localStorage.setItem(currentUser+"_points",points);
-  updateUI();
-}
-
-/* ซื้อ */
-function buy(game,price){
-  if(points < price){
-    alert("พ้อยไม่พอ");
-    return;
-  }
-
-  points -= price;
-  localStorage.setItem(currentUser+"_points",points);
-  updateUI();
-
-  alert("ซื้อ "+game+" สำเร็จ!");
-}
-</script>
-
-</body>
-</html>
+  <div class
